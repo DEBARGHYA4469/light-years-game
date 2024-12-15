@@ -75,6 +75,6 @@ void ly::Application::Render()
 
 void ly::Application::Tick(float DeltaTime)
 {
-	LOG ("Ticking at Frame Rate: %f", 1.f / DeltaTime);
+	//LOG ("Ticking at Frame Rate: %f", 1.f / DeltaTime);
 	//printf("Ticking at Frame Rate: %f" "\n" , 1.f / DeltaTime);
 }

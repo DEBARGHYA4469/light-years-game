@@ -7,7 +7,7 @@ ly::SpaceShip::SpaceShip(World* owningWorld, const std::string& texturePath):
 
 void ly::SpaceShip::Tick(float deltaTime)
 {
-	LOG("Space Ship Tick ...");
+	//LOG("Space Ship Tick ...");
 	Actor::Tick(deltaTime);
 	AddActorLocationOffset(getVelocity() * deltaTime);
 }
@@ -20,4 +20,8 @@ void ly::SpaceShip::setVelocity(sf::Vector2f newVelocity)
 sf::Vector2f ly::SpaceShip::getVelocity() const
 {
 	return mVelocity;
+}
+
+void ly::SpaceShip::Shoot()
+{
 }

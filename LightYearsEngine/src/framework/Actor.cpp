@@ -22,7 +22,7 @@ namespace ly {
 	void Actor::TickInternal(float deltaTime)
 	{	
 		if (!isPendingDestroy()) {
-			LOG("Actor ticking ...");
+			//LOG("Actor ticking ...");
 			Tick(deltaTime);
 		}
 	}
@@ -99,12 +99,12 @@ namespace ly {
 	}
 
 	Actor::~Actor() {
-		LOG("Actor destroyed");
+		//LOG("Actor destroyed");
 	}
 
 	void Actor::BeginPlay()
 	{
-		LOG("Actor began Play!");
+		//LOG("Actor began Play!");
 	}
 
 	void Actor::Tick(float deltaTime)

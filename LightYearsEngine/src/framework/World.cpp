@@ -56,10 +56,10 @@ sf::Vector2u ly::World::getWindowSize() const
 
 void ly::World::tick(float deltaTime)
 {
-	LOG("Ticking at frame rate %f", 1.f / deltaTime);
+	//LOG("Ticking at frame rate %f", 1.f / deltaTime);
 }
 
 void ly::World::BeginPlay()
 {
-	LOG("Begin Play ...");
+	//LOG("Begin Play ...");
 }

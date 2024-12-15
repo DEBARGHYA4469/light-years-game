@@ -1,14 +1,15 @@
 #include "player/PlayerSpaceShip.h"
 #include "SFML/System.hpp"
+#include "weapon/BulletShooter.h"
 
 ly::PlayerSpaceShip::PlayerSpaceShip(World* owningWorld, const std::string& path):
-	SpaceShip(owningWorld, path), mMoveInput{}, mSpeed{200.f}
+	SpaceShip(owningWorld, path), mMoveInput{}, mSpeed{ 200.f }, mShooter{ new BulletShooter(this)}
 {
 }
 
 void ly::PlayerSpaceShip::Tick(float DeltaTime)
 {
-	LOG("Player Space Ship ticking ... ");
+	//LOG("Player Space Ship ticking ... ");
 	SpaceShip::Tick(DeltaTime);
 	HandleInput();
 	ConsumeInput(DeltaTime);
@@ -31,6 +32,10 @@ void ly::PlayerSpaceShip::HandleInput() {
 	}
 	ClampInputOnEdge();
 	NormalizeInput();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+		Shoot();
+	}
 }
 
 void ly::PlayerSpaceShip::ConsumeInput(float DeltaTime) {
@@ -40,7 +45,7 @@ void ly::PlayerSpaceShip::ConsumeInput(float DeltaTime) {
 
 void ly::PlayerSpaceShip::NormalizeInput() {
 	Normalize(mMoveInput);
-	LOG("Move input is now normalized ...%f %f", mMoveInput.x, mMoveInput.y);
+	//LOG("Move input is now normalized ...%f %f", mMoveInput.x, mMoveInput.y);
 }
 
 void ly::PlayerSpaceShip::ClampInputOnEdge() {
@@ -56,5 +61,11 @@ void ly::PlayerSpaceShip::ClampInputOnEdge() {
 	}
 	if (actorLocation.y > GetWindowSize().y && mMoveInput.y == 1) {
 		mMoveInput.y = 0.f;
+	}
+}
+
+void ly::PlayerSpaceShip::Shoot() {
+	if (mShooter) {
+		mShooter->Shoot();
 	}
 }
