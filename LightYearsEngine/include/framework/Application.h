@@ -11,8 +11,15 @@ namespace ly {
 		Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style);
 		void run();
 		template <typename WorldType>
-		weak<WorldType> LoadWorld();
-		sf::Vector2u GetWindowSize() const;
+		weak<WorldType> LoadWorld(); // weak pointer, if world gets deleted client is notified.
+
+		/*
+			World is a entity on its own. Application holds a reference to a world. 
+			But any other client need not hold a shared ptr to World. It can request weak ptr from Application. 
+			Meaning if the World ceases to exist, any other application widget should not prolong its lifetime. 
+		*/
+
+		sf::Vector2u GetWindowSize () const;
 	private:
 
 		void TickInternal(float DeltaTime);
