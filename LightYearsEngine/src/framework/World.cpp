@@ -1,6 +1,7 @@
 #include "framework/World.h"
 #include "framework/Core.h"
 #include "framework/Actor.h"
+#include "framework/Application.h"
 
 ly::World::World(Application* owningApp):
 	mowningApp(owningApp),
@@ -46,6 +47,11 @@ void ly::World::Render(sf::RenderWindow& window)
 
 ly::World::~World()
 {
+}
+
+sf::Vector2u ly::World::getWindowSize() const
+{
+	return mowningApp->GetWindowSize();
 }
 
 void ly::World::tick(float deltaTime)

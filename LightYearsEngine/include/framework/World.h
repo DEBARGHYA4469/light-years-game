@@ -20,6 +20,8 @@ namespace ly {
 			return newActor;
 		}
 
+		sf::Vector2u getWindowSize() const;
+
 	private:
 
 		virtual void tick(float deltaTime);

@@ -14,7 +14,7 @@ namespace ly {
 		auto found = mLoadedTextureMap.find(path);
 		if (found != mLoadedTextureMap.end()) return found->second;
 		shared<sf::Texture> newTexture{new sf::Texture};
-		if (newTexture->loadFromFile(path)) {
+		if (newTexture->loadFromFile(mRootDir + path)) {
 			mLoadedTextureMap.insert({path, newTexture});
 			return newTexture;
 		}
@@ -30,6 +30,11 @@ namespace ly {
 			}
 			else it++;
 		}
+	}
+
+	void AssetManager::SetAssetRootDir(const std::string& dir)
+	{
+		mRootDir = dir;
 	}
 
 	AssetManager::AssetManager() {}

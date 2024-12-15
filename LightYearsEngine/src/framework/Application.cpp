@@ -36,6 +36,11 @@ void ly::Application::run()
 	}
 }
 
+sf::Vector2u ly::Application::GetWindowSize() const
+{
+	return mWindow.getSize();
+}
+
 void ly::Application::TickInternal(float DeltaTime)
 {	
 
