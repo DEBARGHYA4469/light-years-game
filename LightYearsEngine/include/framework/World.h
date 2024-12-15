@@ -1,5 +1,6 @@
 #pragma once 
 #include "framework/Core.h"
+#include "SFML/Graphics.hpp"
 
 namespace ly {
 
@@ -10,10 +11,11 @@ namespace ly {
 		World(Application* owningApp);
 		void BeginPlayInternal();
 		void tickInternal(float deltaTime);
+		void Render(sf::RenderWindow& window);
 		virtual ~World();
 
 		template<typename ActorType> weak<ActorType> SpawnActor() {
-			shared<ActorType> newActor{ new ActorType(this) };
+			shared<ActorType> newActor{ new ActorType(this, "")};
 			mpendingActors.push_back(newActor);
 			return newActor;
 		}

@@ -37,6 +37,13 @@ void ly::World::tickInternal(float deltaTime)
 	tick(deltaTime);
 }
 
+void ly::World::Render(sf::RenderWindow& window)
+{
+	for (auto actor : mActors) {
+		actor->Render(window);
+	}
+}
+
 ly::World::~World()
 {
 }

@@ -1,14 +1,16 @@
 #include "framework/Application.h"
 #include "framework/Core.h"
 #include "framework/World.h"
+#include "framework/AssetManager.h"
 
-ly::Application::Application() 
-	: mWindow (sf::VideoMode(700, 700), "Light Years"),
+ly::Application::Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style)
+	: mWindow(sf::VideoMode(windowWidth, windowHeight), title, style),
 	mTargetframeRate(60.f),
 	mTickClock(),
-	currentWorld(nullptr)
+	currentWorld(nullptr),
+	mCleanCycleClock(),
+	mCleanCycleInterval(2.f)
 {
-
 }
 
 // game loop 
@@ -43,6 +45,11 @@ void ly::Application::TickInternal(float DeltaTime)
 		currentWorld->BeginPlayInternal();
 		currentWorld->tickInternal(DeltaTime);
 	}
+
+	if (mCleanCycleClock.getElapsedTime().asSeconds() >= mCleanCycleInterval) {
+		mCleanCycleClock.restart();
+		AssetManager::Get().CleanCycle();
+	}
 }
 
 void ly::Application::RenderInternal()
@@ -56,11 +63,9 @@ void ly::Application::RenderInternal()
 
 void ly::Application::Render()
 {
-	sf::RectangleShape rect(sf::Vector2f(100, 100));
-	rect.setFillColor(sf::Color::Green);
-	rect.setOrigin(50, 50);
-	rect.setPosition(mWindow.getSize().x / 2.f, mWindow.getSize().y / 2.f);
-	mWindow.draw(rect);
+	if (currentWorld) {
+		currentWorld->Render(mWindow);
+	}
 }
 
 void ly::Application::Tick(float DeltaTime)
