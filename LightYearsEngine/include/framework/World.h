@@ -14,13 +14,16 @@ namespace ly {
 		void Render(sf::RenderWindow& window);
 		virtual ~World();
 
-		template<typename ActorType> weak<ActorType> SpawnActor() {
-			shared<ActorType> newActor{ new ActorType(this, "")};
+		template<typename ActorType, typename... Args> 
+		weak<ActorType> SpawnActor(Args... args) {
+			//printf("%d", this->mActors.size());
+			shared<ActorType> newActor{ new ActorType(this, args...)};
 			mpendingActors.push_back(newActor);
 			return newActor;
 		}
 
 		sf::Vector2u getWindowSize() const;
+		void CleanCycle();
 
 	private:
 

@@ -26,13 +26,8 @@ void ly::World::tickInternal(float deltaTime)
 	mpendingActors.clear();
 
 	for (auto it = mActors.begin(); it != mActors.end();) {
-		if (it->get()->isPendingDestroy()) {
-			it = mActors.erase(it);
-		}
-		else {
-			it->get()->TickInternal(deltaTime);
-			it++;
-		}
+		it->get()->TickInternal(deltaTime);
+		it++;
 	}
 
 	tick(deltaTime);
@@ -52,6 +47,18 @@ ly::World::~World()
 sf::Vector2u ly::World::getWindowSize() const
 {
 	return mowningApp->GetWindowSize();
+}
+
+void ly::World::CleanCycle()
+{
+	for (auto it = mActors.begin(); it != mActors.end();) {
+		if (it->get()->isPendingDestroy()) {
+			it = mActors.erase(it);
+		}
+		else {
+			it++;
+		}
+	}
 }
 
 void ly::World::tick(float deltaTime)

@@ -1,7 +1,7 @@
 add_executable(${LIGHT_YEARS_GAME_TARGET_NAME}
 	${CMAKE_CURRENT_SOURCE_DIR}/include/gameframework/GameApplication.h 
 	${CMAKE_CURRENT_SOURCE_DIR}/src/gameframework/GameApplication.cpp
- "Config.h.in" "include/spaceship/SpaceShip.h" "src/spaceship/SpaceShip.cpp" "include/player/PlayerSpaceShip.h" "src/player/PlayerSpaceShip.cpp" "include/weapon/Shooter.h" "include/weapon/BulletShooter.h" "src/weapon/Shooter.cpp" "src/weapon/BulletShooter.cpp")
+ "Config.h.in" "include/spaceship/SpaceShip.h" "src/spaceship/SpaceShip.cpp" "include/player/PlayerSpaceShip.h" "src/player/PlayerSpaceShip.cpp" "include/weapon/Shooter.h" "include/weapon/BulletShooter.h" "src/weapon/Shooter.cpp" "src/weapon/BulletShooter.cpp" "include/weapon/Bullet.h" "src/weapon/Bullet.cpp")
 
 target_include_directories(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC 
 	${CMAKE_CURRENT_SOURCE_DIR}/include

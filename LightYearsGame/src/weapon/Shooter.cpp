@@ -18,6 +18,6 @@ bool ly::Shooter::IsOnCoolDown() const
 	return false;
 }
 
-ly::Shooter::Shooter(Actor* owner)
+ly::Shooter::Shooter(Actor* owner): mOwner (owner)
 {
 }

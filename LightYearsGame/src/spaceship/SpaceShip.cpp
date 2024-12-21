@@ -1,5 +1,10 @@
 #include "spaceship/SpaceShip.h"
 
+ly::SpaceShip::SpaceShip(World* owningWorld):
+	Actor(owningWorld)
+{
+}
+
 ly::SpaceShip::SpaceShip(World* owningWorld, const std::string& texturePath):
 	Actor(owningWorld, texturePath), mVelocity{}
 {
@@ -24,4 +29,10 @@ sf::Vector2f ly::SpaceShip::getVelocity() const
 
 void ly::SpaceShip::Shoot()
 {
+}
+
+void ly::SpaceShip::BeginPlay()
+{
+	Actor::BeginPlay();
+	SetEnablePhysics(true);
 }

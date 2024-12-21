@@ -9,6 +9,7 @@ sf::Vector2f ly::RotationToVector(float rotation)
 	return sf::Vector2f(std::cos(radians), std::sin(radians));
 }
 
+// PI radians = 180 degrees
 float ly::DegreeToRadians(float degrees)
 {
 	return degrees * PI / 180.f;

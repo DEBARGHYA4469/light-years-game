@@ -7,7 +7,7 @@ namespace ly {
 		void Shoot(); 
 		virtual bool CanShoot() const;
 		virtual bool IsOnCoolDown() const;
-		Actor* getOwner() const { return mOwner; }
+		Actor* GetOwner() const { return mOwner; }
 	protected:
 		Shooter(Actor* owner);
 	private:

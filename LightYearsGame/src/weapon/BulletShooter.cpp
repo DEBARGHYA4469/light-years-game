@@ -1,4 +1,6 @@
 #include "weapon/BulletShooter.h"
+#include "weapon/Bullet.h"
+#include "framework/World.h"
 #include "framework/Core.h"
 
 ly::BulletShooter::BulletShooter(Actor* owner, float coolDownTime):
@@ -23,5 +25,9 @@ bool ly::BulletShooter::IsOnCoolDown() const
 void ly::BulletShooter::ShootImpl()
 {
 	mCoolDownClock.restart();
-	LOG("Shooting ...");
+
+	// bullets are only destroyed when game ends, lots of ghosts bullets.
+	weak<Bullet> newBullet = GetOwner()->GetWorld()->SpawnActor<Bullet>(GetOwner(), "SpaceShooterRedux/PNG/Lasers/laserGreen06.png");
+	newBullet.lock()->setActorLocation(GetOwner()->GetActorLocation());
+	newBullet.lock()->setActorRotation(GetOwner()->GetActorRotation());
 }

@@ -2,6 +2,7 @@
 #include "framework/Core.h"
 #include "framework/World.h"
 #include "framework/AssetManager.h"
+#include "framework/PhysicsSystem.h"
 
 ly::Application::Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style)
 	: mWindow(sf::VideoMode(windowWidth, windowHeight), title, style),
@@ -51,9 +52,15 @@ void ly::Application::TickInternal(float DeltaTime)
 		currentWorld->tickInternal(DeltaTime);
 	}
 
+	// Tick aka Step the Physics System
+	PhysicsSystem::Get().Step(DeltaTime);
+		
 	if (mCleanCycleClock.getElapsedTime().asSeconds() >= mCleanCycleInterval) {
 		mCleanCycleClock.restart();
 		AssetManager::Get().CleanCycle();
+		if (currentWorld) {
+			currentWorld->CleanCycle();
+		}
 	}
 }
 
