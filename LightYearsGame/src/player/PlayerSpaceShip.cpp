@@ -5,6 +5,7 @@
 ly::PlayerSpaceShip::PlayerSpaceShip(World* owningWorld, const std::string& path):
 	SpaceShip(owningWorld, path), mMoveInput{}, mSpeed{ 200.f }, mShooter{ new BulletShooter(this)}
 {
+	SetTeamID(1);
 }
 
 void ly::PlayerSpaceShip::Tick(float DeltaTime)
@@ -68,4 +69,6 @@ void ly::PlayerSpaceShip::Shoot() {
 	if (mShooter) {
 		mShooter->Shoot();
 	}
+	/*LOG ("On Shoot:");
+	mhealthComp.OnHealthChanged.BroadCast(10, 20, 30);*/
 }

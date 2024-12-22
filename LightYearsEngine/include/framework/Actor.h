@@ -4,9 +4,10 @@
 #include "SFML/Graphics.hpp"
 #include "framework/AssetManager.h"
 #include "framework/MathUtil.h"
-
+#include "framework/Core.h"
 
 class b2Body;
+
 namespace ly {
 	class World;
 	class Actor : public Object{
@@ -18,6 +19,8 @@ namespace ly {
 		shared<sf::Texture> mTexture;
 		b2Body* mPhysicsBody;
 		bool mEnablePhysics;
+		uint8 mTeamID;
+		const static uint8 neutralTeamID = 255;
 
 	public:
 		Actor(World* owningWorld, const std::string& texturePath = "");
@@ -48,5 +51,13 @@ namespace ly {
 		virtual void OnActorBeginOverlap(Actor* actor);
 		virtual void OnActorEndOverlap(Actor* actor);
 		virtual void Destroy() override;
+		static uint8 GetNeutralTeamID() { return neutralTeamID; }
+		uint8 GetTeamID() const { return mTeamID; }
+		bool isOtherHostile(Actor* other) const;
+		void SetTeamID(uint8 teamID) { mTeamID = teamID; }
+
+		virtual void ApplyDamage(float amt);
+		sf::Sprite& GetSprite();
+		const sf::Sprite& GetSprite() const;
 	};
 }

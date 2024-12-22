@@ -5,13 +5,15 @@
 #include "framework/PhysicsSystem.h"
 
 namespace ly {
+
 	Actor::Actor(World* owningWorld, const std::string& texturePath) :
 		mowningWorld(owningWorld),
 		mHasBeganPlay(false),
 		mSprite{},
 		mTexture{},
 		mPhysicsBody{nullptr},
-		mEnablePhysics{false}
+		mEnablePhysics{false},
+		mTeamID{ GetNeutralTeamID() }
 	{
 		setTexture(texturePath);
 	}
@@ -173,15 +175,33 @@ namespace ly {
 	}
 	void Actor::OnActorBeginOverlap(Actor* actor)
 	{
-		LOG("Overlapped");
+		 
 	}
 	void Actor::OnActorEndOverlap(Actor* actor)
 	{
-		LOG("Overlapped finished");
+		 
 	}
 	void Actor::Destroy()
 	{	
 		UnInitializePhysics();
 		Object::Destroy();
+	}
+	bool Actor::isOtherHostile(Actor* other) const
+	{
+		if (other->GetTeamID() == Actor::GetNeutralTeamID() || GetTeamID() == Actor::GetNeutralTeamID() || other->GetTeamID() == GetTeamID())
+			return false;
+		return true;
+	}
+	void Actor::ApplyDamage(float amt)
+	{
+		
+	}
+	sf::Sprite& Actor::GetSprite()
+	{
+		return mSprite;
+	}
+	const sf::Sprite& Actor::GetSprite() const
+	{
+		return mSprite;
 	}
 }

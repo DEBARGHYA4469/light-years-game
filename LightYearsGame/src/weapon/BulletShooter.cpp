@@ -29,5 +29,4 @@ void ly::BulletShooter::ShootImpl()
 	// bullets are only destroyed when game ends, lots of ghosts bullets.
 	weak<Bullet> newBullet = GetOwner()->GetWorld()->SpawnActor<Bullet>(GetOwner(), "SpaceShooterRedux/PNG/Lasers/laserGreen06.png");
 	newBullet.lock()->setActorLocation(GetOwner()->GetActorLocation());
-	newBullet.lock()->setActorRotation(GetOwner()->GetActorRotation());
 }
