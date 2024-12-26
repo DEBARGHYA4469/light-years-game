@@ -26,7 +26,7 @@ void ly::Explosion::SpawnExplosion(World* world, const sf::Vector2f& actorLocati
 		weak<Particle> newParticle = world->SpawnActor<Particle>(particleImgPath);
 		newParticle.lock()->RandomSize(mSizeMin, mSizeMax);
 		newParticle.lock()->RandomVelocity(mSpeedMin, mSpeedMax);
-		newParticle.lock()->setActorLocation(actorLocation);
+		newParticle.lock()->SetActorLocation(actorLocation);
 		newParticle.lock()->RandomLifeTime(mLifeTimeMin, mLifeTimeMax);
 		newParticle.lock()->GetSprite().setColor(mParticleColor);
 	}

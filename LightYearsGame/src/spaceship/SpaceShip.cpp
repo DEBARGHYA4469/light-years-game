@@ -76,8 +76,8 @@ void ly::SpaceShip::OnTakenDamage(float amt, float health, float maxHealth)
 
 void ly::SpaceShip::Blow()
 {
-	Explosion* exp = new Explosion();
-	exp->SpawnExplosion(GetWorld(), GetActorLocation());
+	Explosion* explosion = new Explosion();
+	explosion->SpawnExplosion(GetWorld(), GetActorLocation());
 	Destroy();
-	delete exp;
+	delete explosion;
 }

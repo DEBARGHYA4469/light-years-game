@@ -20,8 +20,8 @@ namespace ly {
 		*/
 
 		sf::Vector2u GetWindowSize () const;
-	private:
 
+	private:
 		void TickInternal(float DeltaTime);
 		void RenderInternal();
 		virtual void Render();

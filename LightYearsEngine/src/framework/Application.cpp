@@ -3,6 +3,7 @@
 #include "framework/World.h"
 #include "framework/AssetManager.h"
 #include "framework/PhysicsSystem.h"
+#include "framework/TimerManager.h"
 
 ly::Application::Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style)
 	: mWindow(sf::VideoMode(windowWidth, windowHeight), title, style),
@@ -20,6 +21,8 @@ void ly::Application::run()
 	mTickClock.restart();
 	float accumulatedTime = 0.f;
 	float targetDeltaTime = 1.f / mTargetframeRate;
+
+	currentWorld->BeginPlayInternal();
 
 	while (mWindow.isOpen()) {
 		sf::Event windowEvent;
@@ -48,9 +51,11 @@ void ly::Application::TickInternal(float DeltaTime)
 	Tick(DeltaTime);
 
 	if (currentWorld) {
-		currentWorld->BeginPlayInternal();
 		currentWorld->tickInternal(DeltaTime);
 	}
+
+	// Step the timer 
+	TimerManager::Get().UpdateTimer(DeltaTime);
 
 	// Tick aka Step the Physics System
 	PhysicsSystem::Get().Step(DeltaTime);

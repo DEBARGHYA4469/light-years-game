@@ -3,8 +3,12 @@
 #include "framework/World.h"
 #include "framework/Core.h"
 
-ly::BulletShooter::BulletShooter(Actor* owner, float coolDownTime):
-	Shooter(owner), mCoolDownClock{}
+ly::BulletShooter::BulletShooter(Actor* owner, float coolDownTime, const sf::Vector2f& localPositionOffset, float localRotationOffset)
+	:Shooter(owner), 
+	mCoolDownTime{coolDownTime},
+	mCoolDownClock{},
+	mLocalPositionOffset{ localPositionOffset },
+	mLocalRotationOffset{ localRotationOffset }
 {
 	mCoolDownTime = coolDownTime;
 }
@@ -27,6 +31,11 @@ void ly::BulletShooter::ShootImpl()
 	mCoolDownClock.restart();
 
 	// bullets are only destroyed when game ends, lots of ghosts bullets.
-	weak<Bullet> newBullet = GetOwner()->GetWorld()->SpawnActor<Bullet>(GetOwner(), "SpaceShooterRedux/PNG/Lasers/laserGreen06.png");
-	newBullet.lock()->setActorLocation(GetOwner()->GetActorLocation());
+	// bullets direction is relative to the direction pointed by Shooter
+	sf::Vector2f ownerForwardDir = GetOwner()->GetActorForwardDirection();
+	sf::Vector2f ownerRightDir = GetOwner()->GetActorRightDirection();
+
+	weak<Bullet> newBullet = GetOwner()->GetWorld()->SpawnActor<Bullet>(GetOwner(), "SpaceShooterRedux/PNG/Lasers/laserBlue03.png");
+	newBullet.lock()->SetActorLocation(GetOwner()->GetActorLocation() + ownerForwardDir * mLocalPositionOffset.x + ownerRightDir * mLocalPositionOffset.y);
+	newBullet.lock()->SetActorRotation(GetOwner()->GetActorRotation() + mLocalRotationOffset);
 }

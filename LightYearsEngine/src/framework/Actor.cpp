@@ -16,6 +16,11 @@ namespace ly {
 		mTeamID{ GetNeutralTeamID() }
 	{
 		setTexture(texturePath);
+		SetActorShootingAngle(-90.f);
+	}
+
+	void Actor::SetActorShootingAngle(float fAngle) {
+		mActorShootingAngle = fAngle;
 	}
 
 	void Actor::BeginPlayInternal()
@@ -56,13 +61,13 @@ namespace ly {
 		window.draw(mSprite);
 	}
 
-	void Actor::setActorLocation(const sf::Vector2f& newLocation)
+	void Actor::SetActorLocation(const sf::Vector2f& newLocation)
 	{
 		mSprite.setPosition(newLocation);
 		UpdatePhysicsBodyTransform();
 	}
 
-	void Actor::setActorRotation(float newRotation)
+	void Actor::SetActorRotation(float newRotation)
 	{
 		mSprite.setRotation(newRotation);
 		UpdatePhysicsBodyTransform();
@@ -70,12 +75,12 @@ namespace ly {
 
 	void Actor::AddActorLocationOffset(const sf::Vector2f& offsetAmt)
 	{
-		this->setActorLocation(GetActorLocation() + offsetAmt);
+		this->SetActorLocation(GetActorLocation() + offsetAmt);
 	}
 
 	void Actor::AddActorRotationOffset(const float offsetAmt)
 	{
-		this->setActorRotation(GetActorRotation() + offsetAmt);
+		this->SetActorRotation(GetActorRotation() + offsetAmt);
 	}
 
 	sf::Vector2f Actor::GetActorLocation() const
@@ -90,12 +95,12 @@ namespace ly {
 
 	sf::Vector2f Actor::GetActorForwardDirection() const
 	{
-		return RotationToVector(GetActorRotation() - 90.f);
+		return RotationToVector(GetActorShootingAngle());
 	}
 
 	sf::Vector2f Actor::GetActorRightDirection() const
 	{
-		return RotationToVector(GetActorRotation());
+		return RotationToVector(GetActorShootingAngle() - 90.f);
 	}
 
 	sf::FloatRect Actor::GetActorGlobalBounds() const
@@ -112,7 +117,7 @@ namespace ly {
 		//LOG("Actor destroyed");
 	}
 
-	bool Actor::IsActorOutOfWindowBounds() const
+	bool Actor::IsActorOutOfWindowBounds(float allowance) const
 	{	
 		float windowWidth = GetWorld()->getWindowSize().x;
 		float windowHeight = GetWorld()->getWindowSize().y; 
@@ -121,10 +126,11 @@ namespace ly {
 		float height = GetActorGlobalBounds().height;
 
 		sf::Vector2f actorPos = GetActorLocation();
-		if (actorPos.x < -width) return true;
-		if (actorPos.y < -height) return true;
-		if (actorPos.x > windowWidth + width) return true; // right 
-		if (actorPos.y > windowHeight + height) return true; // down 
+
+		if (actorPos.x < -width - allowance) return true;
+		if (actorPos.y < -height - allowance) return true;
+		if (actorPos.x > windowWidth + width + allowance) return true; // right 
+		if (actorPos.y > windowHeight + height + allowance) return true; // down 
 		return false;
 	}
 
@@ -187,7 +193,8 @@ namespace ly {
 		Object::Destroy();
 	}
 	bool Actor::isOtherHostile(Actor* other) const
-	{
+	{	
+		if (other == nullptr) return false;
 		if (other->GetTeamID() == Actor::GetNeutralTeamID() || GetTeamID() == Actor::GetNeutralTeamID() || other->GetTeamID() == GetTeamID())
 			return false;
 		return true;

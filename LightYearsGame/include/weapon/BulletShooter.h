@@ -5,7 +5,7 @@
 namespace ly{
 	class BulletShooter : public Shooter {
 	public:
-		BulletShooter(Actor* owner, float coolDownTime = 0.1f);
+		BulletShooter(Actor* owner, float coolDownTime = 0.2f, const sf::Vector2f& localPositionOffset = { 0.f, 0.f }, float localRotationOffset = 0.f);
 		virtual bool CanShoot() const override;
 		virtual bool IsOnCoolDown() const override;
 	private: 
@@ -14,5 +14,7 @@ namespace ly{
 
 		// Inherited via Shooter
 		virtual void ShootImpl() override;
+		sf::Vector2f mLocalPositionOffset;
+		float mLocalRotationOffset;
 	};
 };
