@@ -9,7 +9,7 @@ ly::World::World(Application* owningApp):
 	mBeganPlay(false),
 	mActors{},
 	mPendingActors{},
-	mCurrentStageIndex{-1},
+	mCurrentStageIter{mGameStages.end()},
 	mGameStages{}
 {
 }
@@ -20,7 +20,7 @@ void ly::World::BeginPlayInternal()
 		mBeganPlay = true;
 		BeginPlay();
 		InitGameStages();
-		NextGameStage();
+		StartFirstGameStage();
 	}
 }
 
@@ -38,8 +38,8 @@ void ly::World::tickInternal(float deltaTime)
 		it++;
 	}
 
-	if (mCurrentStageIndex >= 0 && mCurrentStageIndex < mGameStages.size()) {
-		mGameStages[mCurrentStageIndex]->TickStage(deltaTime);
+	if (mCurrentStageIter != mGameStages.end()) {
+		(*mCurrentStageIter)->TickStage(deltaTime);
 	}
 
 	tick(deltaTime);
@@ -71,15 +71,6 @@ void ly::World::CleanCycle()
 			it++;
 		}
 	}
-
-	for (auto it = mGameStages.begin(); it != mGameStages.end();) {
-		if (it->get()->IsStageFinished()) {
-			it = mGameStages.erase(it);
-		}
-		else {
-			it++;
-		}
-	}
 }
 
 void ly::World::AddGameStage(const shared<GameStage>& newStage)
@@ -89,12 +80,10 @@ void ly::World::AddGameStage(const shared<GameStage>& newStage)
 
 void ly::World::tick(float deltaTime)
 {
-	//LOG("Ticking at frame rate %f", 1.f / deltaTime);
 }
 
 void ly::World::BeginPlay()
 {
-	//LOG("Begin Play ...");
 }
 
 void ly::World::InitGameStages()
@@ -102,18 +91,27 @@ void ly::World::InitGameStages()
 
 }
 
+void ly::World::StartFirstGameStage()
+{
+	mCurrentStageIter = mGameStages.begin();
+	if (mCurrentStageIter != mGameStages.end()) {
+		(*mCurrentStageIter)->OnStageFinished.BindAction(GetWeakRef(), &World::NextGameStage);
+		(*mCurrentStageIter)->StartStage();
+	}
+}
 
 void ly::World::NextGameStage()
 {
-	++mCurrentStageIndex;
-	if (mCurrentStageIndex >= 0 && mCurrentStageIndex < mGameStages.size()) {
-		mGameStages[mCurrentStageIndex]->OnStageFinished.BindAction(GetWeakRef(), &World::NextGameStage);
-		mGameStages[mCurrentStageIndex]->StartStage();
-	}
-	else {
+	// mCurrentStageIter is not end if it reached here
+	mCurrentStageIter = mGameStages.erase(mCurrentStageIter);
+	if (mCurrentStageIter == mGameStages.end()) {
 		AllGameStagesFinished();
+		return;
 	}
+	(*mCurrentStageIter)->OnStageFinished.BindAction(GetWeakRef(), &World::NextGameStage);
+	(*mCurrentStageIter)->StartStage();
 }
+
 
 void ly::World::AllGameStagesFinished()
 {

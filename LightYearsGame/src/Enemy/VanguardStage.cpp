@@ -1,6 +1,7 @@
 #include "Enemy/VanguardStage.h"
 #include "framework/World.h"
 #include "Enemy/Vanguard.h"
+#include "Enemy/Hexagon.h"
 #include "Enemy/TwinBlade.h"
 
 ly::VanguardStage::VanguardStage(World* world)
@@ -34,8 +35,9 @@ void ly::VanguardStage::StageFinished()
 
 void ly::VanguardStage::SpawnVanguard()
 {
+	//weak<TwinBlade> newVanguard = GetWorld()->SpawnActor<TwinBlade>();
 	//weak<Vanguard> newVanguard = GetWorld()->SpawnActor<Vanguard>();
-	weak<TwinBlade> newVanguard = GetWorld()->SpawnActor<TwinBlade>();
+	weak<Hexagon> newVanguard = GetWorld()->SpawnActor<Hexagon>();
 	newVanguard.lock()->SetActorLocation(mSpawnLocation);
 	+mCurrentRowVanguardCount++;
 	if (mCurrentRowVanguardCount == mVanguardPerRow) {

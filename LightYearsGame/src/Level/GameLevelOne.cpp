@@ -4,6 +4,8 @@
 #include <Enemy/Vanguard.h>
 #include "Level/GameLevelOne.h"
 #include <Enemy/VanguardStage.h>
+#include <Enemy/TwinBladeStage.h>
+#include <gameplay/WaitStage.h>
 
 ly::GameLevelOne::GameLevelOne(Application* app) :
 	World(app)
@@ -18,7 +20,9 @@ void ly::GameLevelOne::BeginPlay() {
 
 }
 
-
 void ly::GameLevelOne::InitGameStages() {
+	//AddGameStage(shared<WaitStage>(new WaitStage(this, 4.f)));
 	AddGameStage(shared<VanguardStage> (new VanguardStage(this)));
+	/*AddGameStage(shared<WaitStage>(new WaitStage(this, 10.f)));
+	AddGameStage(shared<TwinBladeStage>(new TwinBladeStage(this)));*/
 }

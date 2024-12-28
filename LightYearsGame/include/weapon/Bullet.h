@@ -8,7 +8,7 @@ namespace ly {
 		void SetSpeed(float newSpeed);
 		void SetDamage(float newDamage);
 		float GetSpeed() const { return mSpeed; }
-		float GetDamage() const { return mDamage; }
+		float GetDamage() const { return mDamage; }	
 		virtual void Tick(float DeltaTime) override;
 		virtual void BeginPlay() override;
 		virtual void OnActorBeginOverlap(Actor* actor) override;
@@ -17,6 +17,6 @@ namespace ly {
 		void Move(float DeltaTime);
  		Actor* mOwner;
 		float mSpeed;
-		float mDamage; 
+		float mDamage;
 	};
 };

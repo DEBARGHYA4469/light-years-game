@@ -18,9 +18,9 @@ void ly::GameStage::TickStage(float DeltaTime)
 
 void ly::GameStage::FinishStage()
 {
-	OnStageFinished.BroadCast();
 	mStageFinished = true;
 	StageFinished();
+	OnStageFinished.BroadCast();
 }
 
 void ly::GameStage::StageFinished()

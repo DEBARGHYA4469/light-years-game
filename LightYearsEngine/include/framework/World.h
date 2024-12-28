@@ -39,9 +39,12 @@ namespace ly {
 		List<shared<Actor>> mActors;
 		List<shared<Actor>> mPendingActors;
 		List<shared<GameStage>> mGameStages;
-		int mCurrentStageIndex;
+		
+		// Iterator to allow for list deletions
+		List<shared<GameStage>>::iterator mCurrentStageIter;
 		virtual void InitGameStages();
 		void NextGameStage();
+		void StartFirstGameStage();
 		virtual void AllGameStagesFinished();
 	};
 }

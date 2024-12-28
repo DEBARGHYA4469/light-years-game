@@ -16,11 +16,6 @@ namespace ly {
 		mTeamID{ GetNeutralTeamID() }
 	{
 		setTexture(texturePath);
-		SetActorShootingAngle(-90.f);
-	}
-
-	void Actor::SetActorShootingAngle(float fAngle) {
-		mActorShootingAngle = fAngle;
 	}
 
 	void Actor::BeginPlayInternal()
@@ -95,12 +90,12 @@ namespace ly {
 
 	sf::Vector2f Actor::GetActorForwardDirection() const
 	{
-		return RotationToVector(GetActorShootingAngle());
+		return RotationToVector(GetActorRotation() - 90.f);
 	}
 
 	sf::Vector2f Actor::GetActorRightDirection() const
 	{
-		return RotationToVector(GetActorShootingAngle() - 90.f);
+		return RotationToVector(GetActorRotation());
 	}
 
 	sf::FloatRect Actor::GetActorGlobalBounds() const

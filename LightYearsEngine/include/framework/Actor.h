@@ -20,7 +20,6 @@ namespace ly {
 		uint8 mTeamID;
 		const static uint8 neutralTeamID = 255;
 		bool mHasBeganPlay;
-		float mActorShootingAngle;
 		//sf::Texture mTexture; // each Actor has a copy of a texture. use "flyweight pattern"
 
 	public:
@@ -34,8 +33,6 @@ namespace ly {
 		void Render(sf::RenderWindow& window);
 		sf::Sprite& GetSprite();
 		const sf::Sprite& GetSprite() const;
-		void SetActorShootingAngle(float fAngle);
-		float GetActorShootingAngle() const { return mActorShootingAngle; }
 		void CenterPivot();
 		void SetActorLocation(const sf::Vector2f& newLocation);
 		void SetActorRotation(float newRotation);
