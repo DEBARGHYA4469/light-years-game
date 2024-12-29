@@ -8,12 +8,12 @@ ly::GameStage::GameStage(World* world): mWorld(world), mStageFinished(false)
 
 void ly::GameStage::StartStage()
 {
-	//LOG("Stage Started");
+	
 }
 
 void ly::GameStage::TickStage(float DeltaTime)
 {
-	//LOG("Stage Ticked");
+	
 }
 
 void ly::GameStage::FinishStage()
@@ -25,5 +25,5 @@ void ly::GameStage::FinishStage()
 
 void ly::GameStage::StageFinished()
 {
-	//LOG("Stage Finished");
+	
 }

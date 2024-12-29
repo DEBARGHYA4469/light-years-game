@@ -18,6 +18,11 @@ bool ly::Shooter::IsOnCoolDown() const
 	return false;
 }
 
-ly::Shooter::Shooter(Actor* owner): mOwner (owner)
+void ly::Shooter::IncrementLevel(int Amt)
+{
+	mCurrentLevel = std::min(mCurrentLevel + Amt, mMaxLevel);
+}
+
+ly::Shooter::Shooter(Actor* owner) : mOwner(owner), mCurrentLevel{ 1 }, mMaxLevel{2}
 {
 }

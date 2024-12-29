@@ -2,9 +2,11 @@
 #include "SFML/System.hpp"
 #include "weapon/BulletShooter.h"
 #include "framework/Core.h"
+#include "weapon/ThreeWayShooter.h"
+#include "weapon/FrontalWiper.h"
 
 ly::PlayerSpaceShip::PlayerSpaceShip(World* owningWorld, const std::string& path):
-	SpaceShip(owningWorld, path), mMoveInput{}, mSpeed{ 200.f },mShooter{ new BulletShooter(this, 0.1f, {50.f, 0.f}) }
+	SpaceShip(owningWorld, path), mMoveInput{}, mSpeed{ 200.f },mShooter{ new FrontalWiper(this) }
 {
 	SetTeamID(1);
 }
@@ -70,6 +72,13 @@ void ly::PlayerSpaceShip::Shoot() {
 	if (mShooter) {
 		mShooter->Shoot();
 	}
-	/*LOG ("On Shoot:");
-	mhealthComp.OnHealthChanged.BroadCast(10, 20, 30);*/
+}
+
+void ly::PlayerSpaceShip::SetShooter(unique<Shooter>&& shooter)
+{
+	if (mShooter && typeid(*mShooter.get()) == typeid(*shooter.get())) { // RTTI
+		mShooter->IncrementLevel();
+		return;
+	}
+	mShooter = std::move(shooter);
 }

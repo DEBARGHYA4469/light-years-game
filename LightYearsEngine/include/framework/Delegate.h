@@ -36,4 +36,4 @@ namespace ly {
 	private:
 		List<std::function<bool(Args...)>> mCallbacks;
 	};
-};
+};	

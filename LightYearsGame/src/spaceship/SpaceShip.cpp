@@ -78,6 +78,11 @@ void ly::SpaceShip::Blow()
 {
 	Explosion* explosion = new Explosion();
 	explosion->SpawnExplosion(GetWorld(), GetActorLocation());
+	Blew();
 	Destroy();
 	delete explosion;
+}
+
+void ly::SpaceShip::Blew()
+{
 }

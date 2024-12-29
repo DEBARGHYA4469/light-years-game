@@ -24,6 +24,8 @@ void ly::TwinBladeStage::SpawnTwinBlade()
 {
 	weak<TwinBlade> newTwinBlade = GetWorld()->SpawnActor<TwinBlade>();
 	newTwinBlade.lock()->SetActorLocation(mSpawnLocation);
+	newTwinBlade.lock()->SetActorRotation(90.f);
+
 	if (mSpawnLocation == mLeftSpawnLocation) mSpawnLocation = mRightSpawnLocation;
 	else mSpawnLocation = mLeftSpawnLocation;
 	++mCurrentSpawnCount;

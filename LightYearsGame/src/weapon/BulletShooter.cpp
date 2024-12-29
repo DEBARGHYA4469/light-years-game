@@ -3,12 +3,13 @@
 #include "framework/World.h"
 #include "framework/Core.h"
 
-ly::BulletShooter::BulletShooter(Actor* owner, float coolDownTime, const sf::Vector2f& localPositionOffset, float localRotationOffset)
+ly::BulletShooter::BulletShooter(Actor* owner, float coolDownTime, const sf::Vector2f& localPositionOffset, float localRotationOffset, const std::string& BulletTexturePath)
 	:Shooter(owner), 
 	mCoolDownTime{coolDownTime},
 	mCoolDownClock{},
 	mLocalPositionOffset{ localPositionOffset },
-	mLocalRotationOffset{ localRotationOffset }
+	mLocalRotationOffset{ localRotationOffset },
+	mBulletTexturePath(BulletTexturePath)
 {
 	mCoolDownTime = coolDownTime;
 }
@@ -20,10 +21,15 @@ bool ly::BulletShooter::CanShoot() const
 
 bool ly::BulletShooter::IsOnCoolDown() const
 {
-	if (mCoolDownClock.getElapsedTime().asSeconds() > mCoolDownTime) {
+	if (mCoolDownClock.getElapsedTime().asSeconds() > mCoolDownTime / GetCurrentLevel()) {
 		return false;
 	}
 	return true;
+}
+
+void ly::BulletShooter::IncrementLevel(int Amt)
+{
+	Shooter::IncrementLevel(Amt);
 }
 
 void ly::BulletShooter::ShootImpl()
@@ -35,7 +41,7 @@ void ly::BulletShooter::ShootImpl()
 	sf::Vector2f ownerForwardDir = GetOwner()->GetActorForwardDirection();
 	sf::Vector2f ownerRightDir = GetOwner()->GetActorRightDirection();
 
-	weak<Bullet> newBullet = GetOwner()->GetWorld()->SpawnActor<Bullet>(GetOwner(), "SpaceShooterRedux/PNG/Lasers/laserGreen11.png");
+	weak<Bullet> newBullet = GetOwner()->GetWorld()->SpawnActor<Bullet>(GetOwner(), mBulletTexturePath);
 	newBullet.lock()->SetActorLocation(GetOwner()->GetActorLocation() + ownerForwardDir * mLocalPositionOffset.x + ownerRightDir * mLocalPositionOffset.y);
 	newBullet.lock()->SetActorRotation(GetOwner()->GetActorRotation() + mLocalRotationOffset);
 }

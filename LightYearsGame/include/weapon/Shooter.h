@@ -7,10 +7,15 @@ namespace ly {
 		void Shoot(); 
 		virtual bool CanShoot() const;
 		virtual bool IsOnCoolDown() const;
+		int GetCurrentLevel() const { return mCurrentLevel; }
+		int GetMaxLevel() const { return mMaxLevel; }
+		virtual void IncrementLevel(int Amt = 1);
 		Actor* GetOwner() const { return mOwner; }
 	protected:
 		Shooter(Actor* owner);
 	private:
+		int mCurrentLevel;
+		int mMaxLevel;
 		Actor* mOwner;
 		virtual void ShootImpl() = 0; // abstract class
 	};

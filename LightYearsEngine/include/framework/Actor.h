@@ -5,6 +5,7 @@
 #include "framework/AssetManager.h"
 #include "framework/MathUtil.h"
 #include "framework/Core.h"
+#include "framework/Delegate.h"
 
 class b2Body;
 
@@ -58,5 +59,6 @@ namespace ly {
 		bool isOtherHostile(Actor* other) const;
 		void SetTeamID(uint8 teamID) { mTeamID = teamID; }
 		virtual void ApplyDamage(float amt);
+		Delegate<Actor*> onActorDestroyed;
 	};
 }

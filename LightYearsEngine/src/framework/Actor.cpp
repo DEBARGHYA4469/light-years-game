@@ -90,12 +90,12 @@ namespace ly {
 
 	sf::Vector2f Actor::GetActorForwardDirection() const
 	{
-		return RotationToVector(GetActorRotation() - 90.f);
+		return RotationToVector(GetActorRotation());
 	}
 
 	sf::Vector2f Actor::GetActorRightDirection() const
 	{
-		return RotationToVector(GetActorRotation());
+		return RotationToVector(GetActorRotation() + 90.f);
 	}
 
 	sf::FloatRect Actor::GetActorGlobalBounds() const
@@ -185,6 +185,7 @@ namespace ly {
 	void Actor::Destroy()
 	{	
 		UnInitializePhysics();
+		onActorDestroyed.BroadCast(this);
 		Object::Destroy();
 	}
 	bool Actor::isOtherHostile(Actor* other) const
