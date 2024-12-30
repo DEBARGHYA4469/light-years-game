@@ -3,6 +3,7 @@
 #include "framework/Actor.h"
 #include "framework/Application.h"
 #include "gameplay/GameStage.h"
+#include "widgets/HUD.h"
 
 ly::World::World(Application* owningApp):
 	mowningApp(owningApp),
@@ -43,6 +44,11 @@ void ly::World::tickInternal(float deltaTime)
 	}
 
 	tick(deltaTime);
+
+	if (mHud && !mHud->HasInit()) {
+		mHud->NativeInit(mowningApp->GetWindow());
+	} 
+	mHud->Tick(deltaTime);
 }
 
 void ly::World::Render(sf::RenderWindow& window)
@@ -50,13 +56,21 @@ void ly::World::Render(sf::RenderWindow& window)
 	for (auto actor : mActors) {
 		actor->Render(window);
 	}
+	RenderHUD(window);
+}
+
+bool ly::World::DispatchEvent(const sf::Event& event)
+{
+	if (mHud) {
+		return mHud->HandleEvent(event);
+	}
 }
 
 ly::World::~World()
 {
 }
 
-sf::Vector2u ly::World::getWindowSize() const
+sf::Vector2u ly::World::GetWindowSize() const
 {
 	return mowningApp->GetWindowSize();
 }
@@ -76,6 +90,13 @@ void ly::World::CleanCycle()
 void ly::World::AddGameStage(const shared<GameStage>& newStage)
 {
 	mGameStages.push_back(newStage);
+}
+
+void ly::World::RenderHUD(sf::RenderWindow& window)
+{
+	if (mHud) {
+		mHud->Draw(window);
+	}
 }
 
 void ly::World::tick(float deltaTime)

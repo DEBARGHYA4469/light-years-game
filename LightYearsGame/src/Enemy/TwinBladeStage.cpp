@@ -5,8 +5,8 @@
 ly::TwinBladeStage::TwinBladeStage(World* world): GameStage(world),
 	mSpawnInterval(1.5),
 	mSpawnDistanceToCenter(100.f), 
-	mLeftSpawnLocation(world->getWindowSize().x / 2.f - mSpawnDistanceToCenter, -100.f),
-	mRightSpawnLocation(world->getWindowSize().x / 2.f  + mSpawnDistanceToCenter, -100.f),
+	mLeftSpawnLocation(world->GetWindowSize().x / 2.f - mSpawnDistanceToCenter, -100.f),
+	mRightSpawnLocation(world->GetWindowSize().x / 2.f  + mSpawnDistanceToCenter, -100.f),
 	mSpawnLocation(mLeftSpawnLocation),
 	mSpawnAmount(10),
 	mCurrentSpawnCount(0)

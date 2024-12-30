@@ -11,9 +11,8 @@ namespace ly {
 	{
 		if (mPlayerLifeCount > 0) {
 			--mPlayerLifeCount;
-			auto windowSize = world->getWindowSize();
-			mCurrentPlayerSpaceShip = world->SpawnActor<PlayerSpaceShip>();
-			mCurrentPlayerSpaceShip.lock()->setTexture("SpaceShooterRedux/PNG/playerShip1_blue.png");
+			auto windowSize = world->GetWindowSize();
+			mCurrentPlayerSpaceShip = world->SpawnActor<PlayerSpaceShip>("SpaceShooterRedux/PNG/playerShip1_blue.png");
 			mCurrentPlayerSpaceShip.lock()->SetActorLocation({ windowSize.x / 2.f, windowSize.y - 100.f });
 			mCurrentPlayerSpaceShip.lock()->SetActorRotation(-90.f);
 			return mCurrentPlayerSpaceShip;

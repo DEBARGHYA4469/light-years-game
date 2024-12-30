@@ -23,7 +23,7 @@ void ly::UFOStage::TickStage(float DeltaTime)
 
 sf::Vector2f ly::UFOStage::GetRandomSpawnLocation() const
 {	
-	auto windowSize = GetWorld()->getWindowSize();
+	auto windowSize = GetWorld()->GetWindowSize();
 	float whichSide = RandomRange(-1, 1);
 	
 	float SpawnLocationX = 0;
@@ -44,7 +44,7 @@ void ly::UFOStage::StageFinished()
 
 void ly::UFOStage::SpawnUFO()
 {
-	auto windowSize = GetWorld()->getWindowSize();
+	auto windowSize = GetWorld()->GetWindowSize();
 	sf::Vector2f center { windowSize.x / 2.f, windowSize.y / 2.f };
 	sf::Vector2f spawnLocation = GetRandomSpawnLocation();
 	sf::Vector2f SpawnLocationToCenter{ center - spawnLocation };

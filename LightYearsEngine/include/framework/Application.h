@@ -20,8 +20,11 @@ namespace ly {
 		*/
 
 		sf::Vector2u GetWindowSize () const;
+		sf::RenderWindow& GetWindow() { return mWindow; }
+		const sf::RenderWindow& GetWindow() const { return mWindow; }
 
 	private:
+		bool DispatchEvent(const sf::Event& event);
 		void TickInternal(float DeltaTime);
 		void RenderInternal();
 		virtual void Render();
@@ -35,7 +38,7 @@ namespace ly {
 		sf::Clock mCleanCycleClock;
 		float mCleanCycleInterval;
 	};
-
+	 
 	template<typename WorldType>
 	inline weak<WorldType> Application::LoadWorld()
 	{

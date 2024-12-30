@@ -105,7 +105,7 @@ namespace ly {
 
 	sf::Vector2u Actor::GetWindowSize() const
 	{
-		return mowningWorld->getWindowSize();
+		return mowningWorld->GetWindowSize();
 	}
 
 	Actor::~Actor() {
@@ -114,8 +114,8 @@ namespace ly {
 
 	bool Actor::IsActorOutOfWindowBounds(float allowance) const
 	{	
-		float windowWidth = GetWorld()->getWindowSize().x;
-		float windowHeight = GetWorld()->getWindowSize().y; 
+		float windowWidth = GetWorld()->GetWindowSize().x;
+		float windowHeight = GetWorld()->GetWindowSize().y; 
 		
 		float width = GetActorGlobalBounds().width;
 		float height = GetActorGlobalBounds().height;

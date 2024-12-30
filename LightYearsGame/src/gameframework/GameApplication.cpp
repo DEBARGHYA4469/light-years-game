@@ -8,7 +8,7 @@ ly::Application* getApplication() {
 
 namespace ly {
 	GameApplication::GameApplication()
-		: Application(1000, 1000, "Light Years", sf::Style::Titlebar | sf::Style::Close) // bit - masked 
+		: Application(700, 1000, "Light Years", sf::Style::Titlebar | sf::Style::Close) // bit - masked 
 	{
 		AssetManager::Get().SetAssetRootDir(GetResourceDir()); 
 		weak<GameLevelOne> newWorld = LoadWorld<GameLevelOne>();

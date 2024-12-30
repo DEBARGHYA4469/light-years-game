@@ -30,6 +30,9 @@ void ly::Application::run()
 			if (windowEvent.type == sf::Event::EventType::Closed) {
 				mWindow.close();
 			}
+			else {
+				DispatchEvent(windowEvent);
+			}
 		}
 		accumulatedTime += mTickClock.restart().asSeconds();
 		while (accumulatedTime > targetDeltaTime) {
@@ -43,6 +46,14 @@ void ly::Application::run()
 sf::Vector2u ly::Application::GetWindowSize() const
 {
 	return mWindow.getSize();
+}
+
+bool ly::Application::DispatchEvent(const sf::Event& event)
+{
+	if (currentWorld) {
+		currentWorld->DispatchEvent(event);
+	}
+	return true;
 }
 
 void ly::Application::TickInternal(float DeltaTime)

@@ -13,6 +13,7 @@
 #include <player/PlayerManager.h>
 #include <framework/Actor.h>
 #include <player/Player.h>
+#include <widgets/GamePlayHUD.h>
 
 ly::GameLevelOne::GameLevelOne(Application* app) :
 	World(app)
@@ -24,6 +25,8 @@ void ly::GameLevelOne::BeginPlay() {
 	Player newPlayer =  PlayerManager::Get().CreateNewPlayer();
 	mPlayerSpaceShip = newPlayer.SpawnSpaceShip(this);
 	mPlayerSpaceShip.lock()->onActorDestroyed.BindAction(GetWeakRef(), &GameLevelOne::PlayerSpaceShipDestroyed);
+
+	mGamePlayHUD = SpawnHUD<GamePlayHUD>();
 }
 
 void ly::GameLevelOne::PlayerSpaceShipDestroyed(ly::Actor* destroyed) {

@@ -10,9 +10,9 @@ namespace ly {
 		mSideSpawnOffset{80.f},
 		mSpawnGroupAmt{3},
 		mCurrentSpawnCount{0},
-		mMidSpawnLocation{ world->getWindowSize().x / 2.f, -100.f},
-		mRightSpawnLocation{ world->getWindowSize().x / 2.f + mSideSpawnOffset, -100.f - mSideSpawnOffset},
-		mLeftSpawnLocation{ world->getWindowSize().x / 2.f - mSideSpawnOffset, -100.f - mSideSpawnOffset }
+		mMidSpawnLocation{ world->GetWindowSize().x / 2.f, -100.f},
+		mRightSpawnLocation{ world->GetWindowSize().x / 2.f + mSideSpawnOffset, -100.f - mSideSpawnOffset},
+		mLeftSpawnLocation{ world->GetWindowSize().x / 2.f - mSideSpawnOffset, -100.f - mSideSpawnOffset }
 	{	
 
 	}

@@ -21,7 +21,7 @@ ly::VanguardStage::VanguardStage(World* world)
 
 void ly::VanguardStage::StartStage()
 {
-	auto windowSize = GetWorld()->getWindowSize();
+	auto windowSize = GetWorld()->GetWindowSize();
 	mLeftSpawnLocation = sf::Vector2f{ mSpawnDistanceToEdge, -100.f }; // vanguard's coming from outside
 	mRightSpawnLocation = sf::Vector2f{ windowSize.x - mSpawnDistanceToEdge, -100.f};
 	SwitchRow();
