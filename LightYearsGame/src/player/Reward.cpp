@@ -4,6 +4,7 @@
 #include "weapon/FrontalWiper.h"
 #include "framework/Core.h"
 #include "framework/World.h"
+#include "player/PlayerManager.h"
 
 namespace ly {
 
@@ -28,12 +29,21 @@ namespace ly {
 	void Reward::OnActorBeginOverlap(Actor* other)
 	{
 		// TODO : clean up casting, dynamic cast is slower, RTTI
-		PlayerSpaceShip* playerSpaceShip = dynamic_cast<PlayerSpaceShip*>(other);
+		/*PlayerSpaceShip* playerSpaceShip = dynamic_cast<PlayerSpaceShip*>(other);
 		if (playerSpaceShip != nullptr && !playerSpaceShip->isPendingDestroy()) {
 			mRewardFunction(playerSpaceShip);
 			Destroy();
+		}*/
+
+		if (!other || other->isPendingDestroy()) return;
+		Player* player = PlayerManager::Get().GetPlayer();
+		if (!player || player->isPendingDestroy()) return;
+		weak<PlayerSpaceShip> playerSpaceShip = player->GetCurrentSpaceShip();
+		if (playerSpaceShip.expired() || playerSpaceShip.lock()->isPendingDestroy()) return;
+		if (playerSpaceShip.lock()->GetUniqueID() == other->GetUniqueID()) {
+			mRewardFunction(playerSpaceShip.lock().get());
+			Destroy();
 		}
-		
 	}
 	void Reward::OnActorEndOverlap(Actor* actor)
 	{
@@ -53,6 +63,11 @@ namespace ly {
 	weak<Reward> RewardFactory::CreateFrontalWiperReward(World* world)
 	{
 		return CreateReward(world, "SpaceShooterRedux/PNG/pickups/front_row_shooter_pickup.png", &RewardFrontalWiper);
+	}
+
+	weak<Reward> RewardFactory::CreateRewardLife(World* world)
+	{
+		return CreateReward(world, "SpaceShooterRedux/PNG/pickups/playerLife1_blue.png", &RewardLife);
 	}
 
 	weak<Reward> RewardFactory::CreateReward(World* world, const std::string& texturepath, RewardFunction rewardFunction)
@@ -82,5 +97,9 @@ namespace ly {
 			auto weapon = unique<Shooter>(new FrontalWiper(player));
 			player->SetShooter(std::move(weapon));
 		}
+	}
+	void RewardFactory::RewardLife(PlayerSpaceShip* player)
+	{
+		PlayerManager::Get().GetPlayer()->AddLifeCount(1);
 	}
 };

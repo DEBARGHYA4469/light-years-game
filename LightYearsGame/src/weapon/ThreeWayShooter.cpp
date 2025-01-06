@@ -35,3 +35,14 @@ void ly::ThreeWayShooter::IncrementLevel(int Amt)
 
 
 }
+
+void ly::ThreeWayShooter::SetCurrentLevel(int Level)
+{
+	Shooter::SetCurrentLevel(Level);
+	mShooterLeft->SetCurrentLevel(Level);
+	mShooterMid->SetCurrentLevel(Level);
+	mShooterRight->SetCurrentLevel(Level);
+
+	mTopLevelShooterLeft->SetCurrentLevel(Level);
+	mTopLevelShooterRight->SetCurrentLevel(Level);
+}

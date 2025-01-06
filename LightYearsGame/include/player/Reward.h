@@ -29,11 +29,13 @@ namespace ly {
 		static weak<Reward> CreateHealthReward(World* world);
 		static weak<Reward> CreateThreeWayShooterReward(World* world);
 		static weak<Reward> CreateFrontalWiperReward(World* world);
+		static weak<Reward> CreateRewardLife(World* world);
 		static weak<Reward> CreateReward(World* world, const std::string& texturepath, RewardFunction rewardFunction);
 	private:
 		static void RewardHealth(PlayerSpaceShip* player);
 		static void RewardThreeWayShooter(PlayerSpaceShip* player);
 		static void RewardFrontalWiper(PlayerSpaceShip* player);
+		static void RewardLife(PlayerSpaceShip* player);
 	};
 
 	

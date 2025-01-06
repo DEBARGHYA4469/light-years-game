@@ -12,6 +12,8 @@ namespace ly {
 	class World : public Object{
 	public:
 		World(Application* owningApp);
+		Application* GetApplication() { return mowningApp; }
+		const Application* GetApplication() const { return mowningApp; }
 		void BeginPlayInternal();
 		void tickInternal(float deltaTime);
 		void Render(sf::RenderWindow& window);

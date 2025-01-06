@@ -16,7 +16,7 @@ void ly::SpaceShip::Tick(float deltaTime)
 	UpdateBlink(deltaTime);
 }
 
-void ly::SpaceShip::setVelocity(sf::Vector2f newVelocity)
+void ly::SpaceShip::SetVelocity(sf::Vector2f newVelocity)
 {
 	mVelocity = newVelocity;
 }

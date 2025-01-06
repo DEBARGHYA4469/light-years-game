@@ -12,7 +12,8 @@ ly::Hexagon::Hexagon(World* owningWorld, const std::string& texturePath, const s
 	mShooter6{ new BulletShooter(this,1.f, sf::Vector2f{-40.f, 50.f}, + 130.f) }
 {
 	SetTeamID(2);
-	setVelocity(velocity);
+	SetVelocity(velocity);
+	SetScoreAwardAmt(100);
 }
 
 void ly::Hexagon::Tick(float DeltaTime)

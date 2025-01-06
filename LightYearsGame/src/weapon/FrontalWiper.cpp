@@ -6,8 +6,8 @@ ly::FrontalWiper::FrontalWiper(Actor* owner, float coolDownTime, const sf::Vecto
 	mShooter2{ new BulletShooter(owner, coolDownTime, localOffset + sf::Vector2f{0, -width / 6.f}, 0.f) },
 	mShooter3{ new BulletShooter(owner, coolDownTime, localOffset + sf::Vector2f{0, +width / 6.f}, 0.f) },
 	mShooter4{ new BulletShooter(owner, coolDownTime, localOffset + sf::Vector2f{0, +width / 2.f}, 1.f) },
-	mShooter5{ new BulletShooter(owner, 0.1, localOffset + sf::Vector2f{0, -width / 1.5f}, -0.5f) },
-	mShooter6{ new BulletShooter(owner, 0.1, localOffset + sf::Vector2f{0, +width / 1.5f}, +0.5f) },
+	mShooter5{ new BulletShooter(owner, coolDownTime, localOffset + sf::Vector2f{0, -width / 1.5f}, -0.5f) },
+	mShooter6{ new BulletShooter(owner, coolDownTime, localOffset + sf::Vector2f{0, +width / 1.5f}, +0.5f) },
 
 	mWidth(width)
 {
@@ -42,4 +42,15 @@ void ly::FrontalWiper::IncrementLevel(int Amt)
 	mShooter4->IncrementLevel(Amt);
 	mShooter5->IncrementLevel(Amt);
 	mShooter6->IncrementLevel(Amt);
+}
+
+void ly::FrontalWiper::SetCurrentLevel(int Level)
+{
+	Shooter::SetCurrentLevel(Level);
+	mShooter1->SetCurrentLevel(Level);
+	mShooter2->SetCurrentLevel(Level);
+	mShooter3->SetCurrentLevel(Level);
+	mShooter4->SetCurrentLevel(Level);
+	mShooter5->SetCurrentLevel(Level);
+	mShooter6->SetCurrentLevel(Level);
 }

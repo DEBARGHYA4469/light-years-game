@@ -1,6 +1,7 @@
 #include "gameframework/GameApplication.h"
 #include "framework/World.h"
 #include "Level/GameLevelOne.h"
+#include "Level/MainMenu.h"
 
 ly::Application* getApplication() {
 	return new ly::GameApplication();
@@ -11,7 +12,7 @@ namespace ly {
 		: Application(700, 1000, "Light Years", sf::Style::Titlebar | sf::Style::Close) // bit - masked 
 	{
 		AssetManager::Get().SetAssetRootDir(GetResourceDir()); 
-		weak<GameLevelOne> newWorld = LoadWorld<GameLevelOne>();
+		weak<MainMenu> newWorld = LoadWorld<MainMenu>();
 	}
 	void GameApplication::Tick(float DeltaTime)
 	{

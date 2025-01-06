@@ -9,6 +9,7 @@ namespace ly {
 	public:
 		HealthComponent(float health, float maxHealth);
 		void ChangeHealth(float DeltaAmt);
+		void SetInitialHealth(float health, float MaxHealth);
 		float GetHealth() const { return mHealth; }
 		float GetMaxHealth() const { return mMaxHealth; }
 		

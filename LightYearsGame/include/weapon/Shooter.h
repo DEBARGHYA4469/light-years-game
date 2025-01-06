@@ -10,6 +10,7 @@ namespace ly {
 		int GetCurrentLevel() const { return mCurrentLevel; }
 		int GetMaxLevel() const { return mMaxLevel; }
 		virtual void IncrementLevel(int Amt = 1);
+		virtual void SetCurrentLevel(int Level) { mCurrentLevel = Level;  }
 		Actor* GetOwner() const { return mOwner; }
 	protected:
 		Shooter(Actor* owner);

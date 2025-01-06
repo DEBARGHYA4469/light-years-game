@@ -2,8 +2,8 @@
 #include "framework/AssetManager.h"
 
 ly::TextWidget::TextWidget(const std::string& textString, const std::string& fontPath, unsigned int charSize):
-	mFont{ AssetManager::Get().LoadFont (fontPath) },
-	mText { textString, *(mFont.get()), charSize }
+	mTextFont{ AssetManager::Get().LoadFont (fontPath) },
+	mText { textString, *(mTextFont.get()), charSize }
 {
 
 }

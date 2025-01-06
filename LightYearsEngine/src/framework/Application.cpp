@@ -9,7 +9,7 @@ ly::Application::Application(unsigned int windowWidth, unsigned int windowHeight
 	: mWindow(sf::VideoMode(windowWidth, windowHeight), title, style),
 	mTargetframeRate(60.f),
 	mTickClock(),
-	currentWorld(nullptr),
+	mcurrentWorld(nullptr),
 	mCleanCycleClock(),
 	mCleanCycleInterval(2.f)
 {
@@ -22,13 +22,13 @@ void ly::Application::run()
 	float accumulatedTime = 0.f;
 	float targetDeltaTime = 1.f / mTargetframeRate;
 
-	currentWorld->BeginPlayInternal();
+	if(mcurrentWorld) mcurrentWorld->BeginPlayInternal();
 
 	while (mWindow.isOpen()) {
 		sf::Event windowEvent;
 		while (mWindow.pollEvent(windowEvent)) {
 			if (windowEvent.type == sf::Event::EventType::Closed) {
-				mWindow.close();
+				QuitApplication();
 			}
 			else {
 				DispatchEvent(windowEvent);
@@ -50,8 +50,8 @@ sf::Vector2u ly::Application::GetWindowSize() const
 
 bool ly::Application::DispatchEvent(const sf::Event& event)
 {
-	if (currentWorld) {
-		currentWorld->DispatchEvent(event);
+	if (mcurrentWorld) {
+		mcurrentWorld->DispatchEvent(event);
 	}
 	return true;
 }
@@ -61,8 +61,8 @@ void ly::Application::TickInternal(float DeltaTime)
 
 	Tick(DeltaTime);
 
-	if (currentWorld) {
-		currentWorld->tickInternal(DeltaTime);
+	if (mcurrentWorld) {
+		mcurrentWorld->tickInternal(DeltaTime);
 	}
 
 	// Step the timer 
@@ -74,9 +74,14 @@ void ly::Application::TickInternal(float DeltaTime)
 	if (mCleanCycleClock.getElapsedTime().asSeconds() >= mCleanCycleInterval) {
 		mCleanCycleClock.restart();
 		AssetManager::Get().CleanCycle();
-		if (currentWorld) {
-			currentWorld->CleanCycle();
+		if (mcurrentWorld) {
+			mcurrentWorld->CleanCycle();
 		}
+	}
+
+	if (mPendingWorld && mPendingWorld != mcurrentWorld) {
+		mcurrentWorld = mPendingWorld;
+		mcurrentWorld->BeginPlayInternal();
 	}
 }
 
@@ -91,8 +96,8 @@ void ly::Application::RenderInternal()
 
 void ly::Application::Render()
 {
-	if (currentWorld) {
-		currentWorld->Render(mWindow);
+	if (mcurrentWorld) {
+		mcurrentWorld->Render(mWindow);
 	}
 }
 
@@ -100,4 +105,8 @@ void ly::Application::Tick(float DeltaTime)
 {
 	//LOG ("Ticking at Frame Rate: %f", 1.f / DeltaTime);
 	//printf("Ticking at Frame Rate: %f" "\n" , 1.f / DeltaTime);
+}
+
+void ly::Application::QuitApplication() {
+	mWindow.close();
 }

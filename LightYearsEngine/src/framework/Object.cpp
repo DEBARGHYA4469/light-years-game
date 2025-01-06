@@ -4,6 +4,7 @@
 ly::Object::Object()
 {
 	mIsPendingDestroy = false;
+	mUniqueID = GetNextAvailableID();
 }
 
 ly::Object::~Object()
@@ -25,4 +26,11 @@ ly::weak<ly::Object> ly::Object::GetWeakRef() // Get weak reference of self
 ly::weak<const ly::Object> ly::Object::GetWeakRef() const // Get weak reference of self
 {
 	return weak_from_this();
+}
+
+unsigned int ly::Object::uniqueIDCounter = 0;
+
+unsigned int ly::Object::GetNextAvailableID()
+{
+	return ++uniqueIDCounter;
 }

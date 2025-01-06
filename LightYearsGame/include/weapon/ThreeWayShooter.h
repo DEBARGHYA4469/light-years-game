@@ -5,7 +5,8 @@
 namespace ly {
 	class ThreeWayShooter : public Shooter{
 	public:
-		ThreeWayShooter(Actor* owner, float coolDownTime = .3f, const sf::Vector2f& localOffset = {50.f, 0.f});
+		ThreeWayShooter(Actor* owner, float coolDownTime = .6f, const sf::Vector2f& localOffset = {50.f, 0.f});
+		virtual void SetCurrentLevel(int level) override;
 	private:
 		unique<BulletShooter> mShooterLeft;
 		unique<BulletShooter> mShooterMid;

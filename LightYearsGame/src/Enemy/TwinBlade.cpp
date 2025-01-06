@@ -7,7 +7,8 @@ ly::TwinBlade::TwinBlade(World* owningWorld, const sf::Vector2f& velocity, const
 	mShooterRight{ new BulletShooter(this, 1.f, {60.f, 20.f}, 0.f) }
 {	
 	SetTeamID(2);
-	setVelocity(velocity);
+	SetVelocity(velocity);
+	SetScoreAwardAmt(80);
 }
 
 void ly::TwinBlade::Tick(float DeltaTime)

@@ -8,8 +8,9 @@ mshooter2{ new BulletShooter(this, 1.f, {0.f, 0.f}, 90.f) },
 mshooter3{ new BulletShooter(this, 1.f, {0.f, 0.f}, 200.f) },
 mRotationSpeed{rotationSpeed}
 {
-	setVelocity(velocity);
+	SetVelocity(velocity);
 	SetTeamID(2);
+	SetScoreAwardAmt(30);
 }
 
 void ly::UFO::Tick(float DeltaTime)

@@ -16,17 +16,24 @@ void ly::HealthComponent::ChangeHealth(float DeltaAmt)
 	if (mHealth < 0) mHealth = 0;
 	if (mHealth > mMaxHealth) mHealth = mMaxHealth;
 	
+	OnHealthChanged.BroadCast(DeltaAmt, mHealth, mMaxHealth);
+	
 	if (DeltaAmt < 0) { 
 		TakenDamage(-DeltaAmt);
 		if (mHealth <= 0) {
-			HealthEmpty();
+			HealthEmpty(); // Re-Spawn !! 
 		}
 	}
 	else {
 		HealthRegen(DeltaAmt);
 	}
-	OnHealthChanged.BroadCast(DeltaAmt, mHealth, mMaxHealth);
 }
+void ly::HealthComponent::SetInitialHealth(float health, float MaxHealth)
+{
+	mHealth = health;
+	mMaxHealth = MaxHealth;
+}
+
 void ly::HealthComponent::TakenDamage(float Amt)
 {
 	OnTakenDamage.BroadCast(Amt, mHealth, mMaxHealth);

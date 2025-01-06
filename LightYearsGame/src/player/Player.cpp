@@ -11,6 +11,7 @@ namespace ly {
 	{
 		if (mPlayerLifeCount > 0) {
 			--mPlayerLifeCount;
+			onLifeChanged.BroadCast(mPlayerLifeCount);
 			auto windowSize = world->GetWindowSize();
 			mCurrentPlayerSpaceShip = world->SpawnActor<PlayerSpaceShip>("SpaceShooterRedux/PNG/playerShip1_blue.png");
 			mCurrentPlayerSpaceShip.lock()->SetActorLocation({ windowSize.x / 2.f, windowSize.y - 100.f });
@@ -19,7 +20,7 @@ namespace ly {
 		}
 		else {
 			onLifeExhausted.BroadCast();
-			return weak<PlayerSpaceShip>(); // will be expired when received
+			return mCurrentPlayerSpaceShip = weak<PlayerSpaceShip>(); // will be expired when received
 		}
 		
 	}
@@ -28,7 +29,7 @@ namespace ly {
 		if (Amt > 0) {
 			mPlayerLifeCount += Amt;
 			onLifeChanged.BroadCast(mPlayerLifeCount);
-		}
+		} 
 	}
 	int Player::AddScore(unsigned int Amt)
 	{

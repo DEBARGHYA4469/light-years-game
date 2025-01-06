@@ -18,7 +18,7 @@ namespace ly {
 			But any other client need not hold a shared ptr to World. It can request weak ptr from Application. 
 			Meaning if the World ceases to exist, any other application widget should not prolong its lifetime. 
 		*/
-
+		void QuitApplication();
 		sf::Vector2u GetWindowSize () const;
 		sf::RenderWindow& GetWindow() { return mWindow; }
 		const sf::RenderWindow& GetWindow() const { return mWindow; }
@@ -34,7 +34,8 @@ namespace ly {
 		float mTargetframeRate;
 		sf::Clock mTickClock;
 
-		shared<World> currentWorld;
+		shared<World> mcurrentWorld;
+		shared<World> mPendingWorld;
 		sf::Clock mCleanCycleClock;
 		float mCleanCycleInterval;
 	};
@@ -43,7 +44,9 @@ namespace ly {
 	inline weak<WorldType> Application::LoadWorld()
 	{
 		shared<WorldType> newWorld { new WorldType(this) };
-		currentWorld = newWorld;
+		mPendingWorld = newWorld;
+		//mcurrentWorld = newWorld; // Cannot do this, iterator invalidation, because load world will be called by iterators of old world which causes old world to vanish
+		// https://www.geeksforgeeks.org/iterator-invalidation-cpp/
 		return newWorld;
 	}
 };

@@ -7,14 +7,14 @@ namespace ly {
 	public:
 		SpaceShip(World* owningWorld, const std::string& texturePath = "");
 		virtual void Tick(float deltaTime) override;
-		void setVelocity(sf::Vector2f newVelocity);
+		void SetVelocity(sf::Vector2f newVelocity);
 		sf::Vector2f getVelocity() const;
 		virtual void Shoot();
 		virtual void BeginPlay() override;
 		virtual void ApplyDamage(float amt) override;
 		void Blink();
 		void UpdateBlink(float DeltaTime);
-		HealthComponent& GetHealthComponent() { return mhealthComp;  }
+		HealthComponent& GetHealthComponent() { return mhealthComp; }
 	private:
 		sf::Vector2f mVelocity;
 		float mBlinkTime;

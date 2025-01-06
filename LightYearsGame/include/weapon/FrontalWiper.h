@@ -10,6 +10,7 @@ namespace ly {
 			float coolDownTime = 0.2f, 
 			const sf::Vector2f& localOffset = { 50.f, 0.f },
 			float width = 60.f);
+		virtual void SetCurrentLevel(int Level) override;
 	private:
 		float mWidth;
 		virtual void ShootImpl() override;
